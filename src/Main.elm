@@ -107,7 +107,30 @@ update msg model =
             ( { model | question = generatedQuestion }, randomAnswerCandidates generatedQuestion )
 
         AnswerCandidatesGenerated generatedAnswerCandidates ->
-            ( { model | answerCandidates = generatedAnswerCandidates }, Cmd.none )
+            if isUniqueList generatedAnswerCandidates then
+                ( { model | answerCandidates = generatedAnswerCandidates }, Cmd.none )
+
+            else
+                ( model, randomAnswerCandidates model.question )
+
+
+isUniqueList : List Int -> Bool
+isUniqueList list =
+    case List.head list of
+        Just elem ->
+            case List.tail list of
+                Just tailList ->
+                    if List.member elem tailList then
+                        False
+
+                    else
+                        isUniqueList tailList
+
+                Nothing ->
+                    True
+
+        Nothing ->
+            True
 
 
 questionGenerator : Random.Generator Question
