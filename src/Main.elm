@@ -206,38 +206,49 @@ evaluation answerCount =
 
 view : Model -> Html Msg
 view model =
-    case model.state of
-        Start ->
-            startView model
+    Html.div [ class "container" ]
+        [ case model.state of
+            Start ->
+                startView model
 
-        Game ->
-            gameView model
+            Game ->
+                gameView model
 
-        Finish ->
-            finishView model
+            Finish ->
+                finishView model
+        ]
 
 
 startView : Model -> Html Msg
 startView _ =
-    Html.div []
-        [ Html.p [] [ text "たのしいさんすう ひきざんへん" ]
-        , Html.button [ onClick StartGame ] [ text "スタート" ]
+    Html.div [ class "content center" ]
+        [ Html.p [ class "title" ]
+            [ text "たのしいさんすう"
+            , Html.br [] []
+            , text "ひきざんへん"
+            ]
+        , Html.button [ class "button", onClick StartGame ] [ text "スタート" ]
         ]
 
 
 gameView : Model -> Html Msg
 gameView model =
-    Html.div []
-        [ Html.p [] [ text (String.fromInt model.gameCount ++ "回目") ]
-        , Html.p []
+    Html.div [ class "content center" ]
+        [ Html.p [ class "title" ] [ text (String.fromInt model.gameCount ++ "もんめ") ]
+        , Html.p [ class "title" ]
             [ Html.span [] [ String.fromInt model.question.x |> text ]
             , Html.span [] [ text " - " ]
             , Html.span [] [ String.fromInt model.question.y |> text ]
+            , Html.span [] [ text " = ?" ]
             ]
-        , Html.div [] <|
+        , Html.div [ class "candidates has-margin-top" ] <|
             List.map
                 (\answer ->
-                    Html.button [ onClick <| SelectAnswer answer ] [ String.fromInt answer |> text ]
+                    Html.button
+                        [ class "button"
+                        , onClick <| SelectAnswer answer
+                        ]
+                        [ String.fromInt answer |> text ]
                 )
                 model.answerCandidates
         ]
@@ -245,9 +256,9 @@ gameView model =
 
 finishView : Model -> Html Msg
 finishView model =
-    Html.div []
+    Html.div [ class "content center" ]
         [ answerRateView model.answerCount
-        , Html.div [] <|
+        , Html.div [ class "title" ] <|
             case evaluation model.answerCount of
                 Excellent ->
                     [ text "さすがだね！" ]
@@ -257,14 +268,14 @@ finishView model =
 
                 Bad ->
                     [ text "つぎはもっとがんばろう！" ]
-        , Html.button [ onClick ResetGame ] [ text "はじめにもどる" ]
+        , Html.button [ class "button", onClick ResetGame ] [ text "はじめにもどる" ]
         ]
 
 
 answerRateView : Int -> Html Msg
 answerRateView answerCount =
-    Html.div []
-        [ String.join "" [ "10問中", String.fromInt answerCount, "問正解！" ] |> text
+    Html.div [ class "title" ]
+        [ String.join "" [ "10もん ちゅう ", String.fromInt answerCount, "もん せいかい！" ] |> text
         ]
 
 

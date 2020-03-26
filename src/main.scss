@@ -1,14 +1,56 @@
-@import "~css-wipe";
+@import '~css-wipe';
 
 body {
   color: #222;
   font-family: sans-serif;
-  line-height: 1.5;
+  line-height: 1.8rem;
+  background-color: #dfecaa;
 }
 
-.ly_cont {
-  max-width: 1230px;
-  padding: 60px 15px;
-  margin-right: auto;
-  margin-left: auto;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+.content {
+  display: block;
+}
+
+.center {
+  text-align: center;
+}
+
+.title {
+  font-size: 3rem;
+  line-height: 4rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  background: #668ad8; /*ボタン色*/
+  color: #fff;
+  border-bottom: solid 4px #627295;
+  border-radius: 3px;
+  font-size: 1.2rem;
+  cursor: pointer;
+
+  &:active {
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px); /*下に動く*/
+    border-bottom: none; /*線を消す*/
+  }
+}
+
+.candidates {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.has-margin-top {
+  margin-top: 24px;
 }
